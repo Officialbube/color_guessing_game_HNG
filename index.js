@@ -56,3 +56,33 @@ function handleGuess(color) {
     }
 }
 
+function startNewRound() {
+    targetColor = generateRandomColor();
+    colorBox.style.backgroundColor = targetColor;
+    
+    colorOptions.innerHTML = '';
+    const options = generateOptions(targetColor);
+    
+    options.forEach(color => {
+        const button = document.createElement('button');
+        button.className = 'color-option';
+        button.setAttribute('data-testid', 'colorOption');
+        button.style.backgroundColor = color;
+        button.onclick = () => handleGuess(color);
+        colorOptions.appendChild(button);
+    });
+
+    hideGameStatus();
+    isAnimating = false;
+}
+
+function startNewGame() {
+    score = 0;
+    scoreElement.textContent = `Score: ${score}`;
+    startNewRound();
+}
+
+newGameButton.addEventListener('click', startNewGame);
+
+// Start the game
+startNewGame();
